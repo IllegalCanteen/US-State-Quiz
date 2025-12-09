@@ -13,10 +13,7 @@ data_list=data.state.to_list()
 while len(guessed_states)<50:
     answer_state=screen.textinput(title=f"{len(guessed_states)}/50 states guessed",prompt="Guess another state").title()
     if answer_state=="Exit":
-        missing_states=[]
-        for state in data_list:
-            if state in data_list and state not in guessed_states:
-                missing_states.append(state)
+        missing_states=[state for state in data_list if state not in guessed_states]
         missing_states_data=pandas.DataFrame(missing_states)
         missing_states_data.to_csv("states_to_learn.csv")
         break
@@ -28,4 +25,5 @@ while len(guessed_states)<50:
         state_data=data[data.state==answer_state]
         t.goto(state_data.x.item(),state_data.y.item())
         t.write(answer_state)
+
 turtle.mainloop()
